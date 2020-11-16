@@ -10,3 +10,10 @@
   background: rgba(255, 255, 255, 0.2);
   transition: background 0.3s ease-in-out;
 }
+
+.AnswerItem.success {
+  background: rgba(81, 255, 0, 0.5);
+}
+.AnswerItem.error {
+  background: rgba(255, 0, 0, 0.5);
+}
