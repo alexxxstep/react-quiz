@@ -1,40 +1,56 @@
 import React from 'react'
+import Button from '../UI/Button/Button'
 import styles from './FinishedQuiz.module.css'
 
 const FinishedQuiz = (props) => {
-  const results = props.results
+  const successCounter = Object.keys(props.results).reduce((acc, key) => {
+    if (props.results[key] === 'success') {
+      acc++
+    }
+    return acc
+  }, 0)
 
-  console.log(results)
+  // console.log('successCounter', successCounter)
 
   return (
     <div className={styles.FinishedQuiz}>
       <ul>
         {props.quiz.map((quizItem, index) => {
+          let style = {}
+
+          if (props.results[quizItem.id] === 'success') {
+            style = {
+              cls: 'success',
+              val: 'check_circle',
+            }
+          } else {
+            style = {
+              cls: 'error',
+              val: 'clear',
+            }
+          }
+
           return (
             <li key={index}>
-              <strong>{quizItem.id}. </strong>
+              <strong>{index + 1}. </strong>
               {quizItem.question}
-              <i className={'material-icons ' + styles.error}>clear</i>
+              <i className={'material-icons ' + styles[style.cls]}>
+                {style.val}
+              </i>
             </li>
           )
         })}
-
-        {/* <li>
-          <strong>1. </strong>
-          How are you
-          <i className={'material-icons ' + styles.error}>clear</i>
-        </li>
-        <li>
-          <strong>2. </strong>
-          How are you
-          <i className={'material-icons ' + styles.success}>check_circle</i>
-        </li> */}
       </ul>
 
-      <p>Wright 4 from 12</p>
+      <p>
+        {`Wright ${successCounter}`} from {props.quiz.length}
+      </p>
 
       <div className={''}>
-        <button>Repeat</button>
+        <Button onClick={props.onRetry} type="primary">
+          repeat
+        </Button>
+        <Button type="success">go to the list of quizes</Button>
       </div>
     </div>
   )
